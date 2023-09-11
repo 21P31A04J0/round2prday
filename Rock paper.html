@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rock Paper Scissors</title>
+    <style>
+        img {
+            width: 100px;
+            height: 100px;
+        }
+        .highlight {
+            border: 2px solid yellow;
+        }
+        .e{
+            color: blue;
+        }
+        .f{
+            color: blueviolet;
+        }
+    </style>
+</head>
+<body>
+    <center>
+    <h1 class="e">Rock Paper Scissors</h1>
+    <p class="f">Score: <span id="score">0</span></p>
+    <p class="f">Choose one:</p>
+    <img id="rockImage" src="p.jpeg" alt="Rock">
+    <button onclick="playGame('Rock')">Rock</button>
+    <img id="paperImage" src="s.jpeg" alt="Paper">
+    <button onclick="playGame('Paper')">Paper</button>
+    <img id="scissorsImage" src="r.jpeg" alt="Scissors">
+    <button onclick="playGame('Scissors')">Scissors</button>
+    <p id="result"></p>
+</center>
+
+    <script>
+        let score = 0;
+
+        function updateScore() {
+            document.getElementById('score').innerText = score;
+        }
+
+        function playGame(playerChoice) {
+            const choices = ['Rock', 'Paper', 'Scissors'];
+            const computerChoice = choices[Math.floor(Math.random() * 3)];
+            const images = document.querySelectorAll('img');
+            images.forEach(img => img.classList.remove('highlight'));
+            document.getElementById(`${computerChoice.toLowerCase()}Image`).classList.add('highlight');
+
+            let result = '';
+
+            if (playerChoice === computerChoice) {
+                result = 'It\'s a tie! You both chose ' + playerChoice + '.';
+            } else if (
+                (playerChoice === 'Rock' && computerChoice === 'Scissors') ||
+                (playerChoice === 'Scissors' && computerChoice === 'Paper') ||
+                (playerChoice === 'Paper' && computerChoice === 'Rock')
+            ) {
+                result = `You win! Computer chose ${computerChoice}.`;
+                score++; 
+            } else {
+                result = `Computer wins! Computer chose ${computerChoice}.`;
+                score--;
+            }
+
+            updateScore(); 
+            document.getElementById('result').innerText = result;
+        }
+
+        updateScore();
+    </script>
+</body>
+</html>
